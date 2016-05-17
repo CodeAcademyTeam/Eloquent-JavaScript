@@ -262,13 +262,13 @@ link:05_higher_order.html#higher_order[Chapter 5], we will discuss the
 wonderful things that can be done by passing around function values to
 other functions.
 
-== Declaration notation ==
+== Elan qaydası ==
 
 (((syntax)))(((square example)))(((function
-keyword)))(((function,definition)))(((function,declaration)))There is
-a slightly shorter way to say “++var square = function…++”. The
-`function` keyword can also be used at the start of a statement, as in
-the following:
+keyword)))(((function,definition)))(((function,declaration)))
+“++var square = function…++” kimi yazmaqdan daha qısa üsul var.
+`function` açar sözü aşağıdakı nümunədəki kimi bəyanatın (statement)
+əvvəlində də gələ bilər.
 
 [source,javascript]
 ----
@@ -277,10 +277,9 @@ function square(x) {
 }
 ----
 
-(((future)))(((execution order)))This is a function _declaration_. The
-statement defines the variable `square` and points it at the given
-function. So far so good. There is one subtlety with this form of
-function definition, however.
+(((future)))(((execution order)))Bu funksiya _bəyanıdır_(declaration).
+Bu bəyanat `square` dəyişənini elan edir və verilmiş funksiyaya işarə 
+edir. Bəyanatın bu cür formasında bir incə(sublety) məqam var. 
 
 [source,javascript]
 ----
@@ -298,6 +297,13 @@ to the top of their scope and can be used by all the code in that
 scope. This is sometimes useful because it gives us the freedom to
 order code in a way that seems meaningful, without worrying about
 having to define all functions above their first use.
+Baxmayaraq ki, funksiyanın elanı istifadəsindən _aşağıda_ yer alıb,
+bu kod işləyir. Bu ona görədir ki, funksiya bəyanları adi yuxarıdan-
+aşağıya nəzarət axınının (flow of control) bir hissəsi deyil. Onlar
+konsept olaraq öz təsir çərçivəsininin(scope) yuxarısına köçürülür və həmin 
+çərçivədə bütün kodda istifadə oluna bilər. Bu bəzən yararlıdır, çünki 
+bu bizə kodu, funksiyaları kodun yuxarısında elan etdim  bizimçün məntiqli olan istədiyimiz strukturla yazmaq imkanı 
+verir. 
 
 (((function,declaration)))What happens when you put such a function
 definition inside a conditional (`if`) block or a loop? Well, don't do
