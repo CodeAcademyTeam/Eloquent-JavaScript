@@ -232,93 +232,85 @@ alone. The next version of JavaScript will introduce a `let` keyword,
 which works like `var` but creates a variable that is local to the
 enclosing _block_, not the enclosing _function_.
 
-== Functions as values ==
+== Funksiyalar, dəyər kimi ==
 
-(((function,as value)))Function ((variable))s usually simply act as
-names for a specific piece of the program. Such a variable is defined
-once and never changed. This makes it easy to start confusing the
-function and its name.
+(((function,as value)))Funksiya ((dəyişən))ləri əsasən müəyyən proqram
+hissəsi üçün ad kimi davranır. Belə dəyişən bir dəfə elan olunur ve heç vaxt 
+dəyişilmir. Buna görə funksiyanı və onun adını qarışdırmaq çox asandır.
 
-(((variable,assignment)))But the two are different. A function value
-can do all the things that other values can do—you can use it in
-arbitrary ((expression))s, not just call it. It is possible to store a
-function value in a new place, pass it as an argument to a function,
-and so on. Similarly, a variable that holds a function is still just a
-regular variable and can be assigned a new value, like so:
+(((variable,assignment)))Lakin bu iki anlayış fərqlidir. Funksiya 
+dəyəri digər bütün dəyərlərin bacardığını edə bilir. Onu çağırmaqdan 
+başqa, həm də ((ixtiyari)) ifadədə istifadə etmək olar. Funksiyanın 
+dəyərini yeni yerdə saxlamaq, başqa funskiyaya arqument kimi ötürmək
+və s. olar. Funksiyanı saxlayan dəyişən eyni zamanda həm də adi bir
+dəyişən olduğu üçün ona aşağıdakı kimi yeni dəyər mənimsətmək olar:
 
 // test: no
 
 [source,javascript]
 ----
-var launchMissiles = function(value) {
-  missileSystem.launch("now");
+var raketleriIsheSal = function(value) {
+  raketSistemi.isheSal("indi");
 };
-if (safeMode)
-  launchMissiles = function(value) {/* do nothing */};
+if (tehlukesiz rejim)
+  raketleriIsheSal = function(value) {/* heç nə etmə */};
 ----
 
-(((function,higher-order)))In
-link:05_higher_order.html#higher_order[Chapter 5], we will discuss the
-wonderful things that can be done by passing around function values to
-other functions.
+(((function,higher-order)))
+link:05_higher_order.html#higher_order[Fəsil 5] -də funksiya dəyərini
+başqa funksiyalara ötürməklə necə möhtəşəm nəticələr ala biləyəcimizi
+müzakirə edəcəyik.
 
 == Elan qaydası ==
 
 (((syntax)))(((square example)))(((function
 keyword)))(((function,definition)))(((function,declaration)))
-“++var square = function…++” kimi yazmaqdan daha qısa üsul var.
+“++var kvadrat = function…++” kimi yazmaqdan daha qısa üsul var.
 `function` açar sözü aşağıdakı nümunədəki kimi bəyanatın (statement)
 əvvəlində də gələ bilər.
 
 [source,javascript]
 ----
-function square(x) {
+function kvadrat(x) {
   return x * x;
 }
 ----
 
 (((future)))(((execution order)))Bu funksiya _bəyanıdır_(declaration).
-Bu bəyanat `square` dəyişənini elan edir və verilmiş funksiyaya işarə 
+Bu bəyanat `kvadrat` dəyişənini elan edir və verilmiş funksiyaya işarə 
 edir. Bəyanatın bu cür formasında bir incə(sublety) məqam var. 
 
 [source,javascript]
 ----
-console.log("The future says:", future());
+console.log("Gələcək deyir:", gelecek());
 
-function future() {
-  return "We STILL have no flying cars.";
+function gelecek() {
+  return "Hələ də uçan avtomobillərimiz yoxdur.";
 }
 ----
 
-This code works, even though the function is defined _below_ the code
-that uses it. This is because function declarations are not part of
-the regular top-to-bottom flow of control. They are conceptually moved
-to the top of their scope and can be used by all the code in that
-scope. This is sometimes useful because it gives us the freedom to
-order code in a way that seems meaningful, without worrying about
-having to define all functions above their first use.
-Baxmayaraq ki, funksiyanın elanı istifadəsindən _aşağıda_ yer alıb,
-bu kod işləyir. Bu ona görədir ki, funksiya bəyanları adi yuxarıdan-
-aşağıya nəzarət axınının (flow of control) bir hissəsi deyil. Onlar
+Baxmayaraq ki, funksiyanın elanı istifadəsindən _aşağıda_ yer alıb, 
+bu kod işləyəcək. Bu ona görədir ki, funksiya bəyanları adi yuxarıdan-
+aşağıya nəzarət axınının (flow of control) bir hissəsi deyil. Onlar 
 konsept olaraq öz təsir çərçivəsininin(scope) yuxarısına köçürülür və həmin 
-çərçivədə bütün kodda istifadə oluna bilər. Bu bəzən yararlıdır, çünki 
-bu bizə kodu, funksiyaları kodun yuxarısında elan etdim  bizimçün məntiqli olan istədiyimiz strukturla yazmaq imkanı 
-verir. 
+çərçivə daxilində bütün kodda istifadə oluna bilər. Bu bəzən yararlıdır, 
+çünki bu bizə kodu, funksiya bəyanlarını kodun yuxarısında və ya aşağısında 
+yerləşdirməyimizdən asılı olmayaraq, bizə məntiqli görünən - istədiyimiz 
+strukturla yazmaq imkanı verir. 
 
-(((function,declaration)))What happens when you put such a function
-definition inside a conditional (`if`) block or a loop? Well, don't do
-that. Different JavaScript platforms in different browsers have
-traditionally done different things in that situation, and the latest
-((standard)) actually forbids it. If you want your programs to behave
-consistently, only use this form of function-defining statements in
-the outermost block of a function or program.
+(((function,declaration)))Bəs funksiya elanlarını şərt (`if`) və ya dövr 
+blokuna yerləşdirdikdə nə baş verir? Bunu etməyin. Belə vəziyyətdə fərqli 
+JavaScript platformaları fərqli brauzerlərdə müxtəlif nəticələr vermişlər 
+və ən son ((standart)) bunu ümumiyyətlə qadağan edir. Əgər proqramınızın 
+davamlı olmağını istəyirsinizsə, bu cür funksiya elanlarını ancaq 
+funksiyanın və ya proqramın səvviyəcə ən üst blokunda edin.
 
 [source,javascript]
 ----
-function example() {
-  function a() {} // Okay
-  if (something) {
-    function b() {} // Danger!
+function numune() {
+  function a() {} // OK
+  if (nə isə) {
+    function b() {} // Təhlükə!
   }
 }
 ----
@@ -327,129 +319,123 @@ function example() {
 == The call stack ==
 
 indexsee:[stack,call stack]
-(((call stack)))(((function,application)))It will be helpful to take a
-closer look at the way control flows through functions. Here is a
-simple program that makes a few function calls:
+(((call stack)))(((function,application)))Kodda ardıcıllığın(axın) necə təmin 
+olunduğuna yaxından baxaq. Aşağıda bir neçə funksiya çağırışı edən kiçik 
+proqrama baxaq:
 
 [source,javascript]
 ----
-function greet(who) {
-  console.log("Hello " + who);
+function salamla(kim) {
+  console.log("Salam " + kim);
 }
-greet("Harry");
-console.log("Bye");
+salamla("Aysel");
+console.log("Hələlik");
 ----
 
-(((control flow)))(((execution order)))(((console.log)))A run through
-this program goes roughly like this: the call to `greet` causes
-control to jump to the start of that function (line 2). It calls
-`console.log` (a built-in browser function), which takes control, does
-its job, and then returns control to line 2. Then it reaches the end
-of the `greet` function, so it returns to the place that called it, at
-line 4. The line after that calls `console.log` again.
+(((control flow)))(((execution order)))(((console.log)))Burada nəzarət axını 
+kobud olaraq belə baş verir: `salamla` funksiyasının çağırışı nəzarət axının  
+funksiyanın başlanğıcına getməsinə səbəb olur (sətir 2). O da öz növbəsində 
+nəzarət axınını ələ keçirən `console.log` -u (brauzer funksiyası) çağırır, 
+öz işini görür və yenidən sətir 2-ə qayıdır. Bundan sonra `salamla` funksiyasının
+sonuna çatır, onun çağırıldığı sətirə, yəni 4-cü sətirə geri qayıdır. Bundan 
+sonrakı sətir `console.log`-u yenidən çağırır.
 
-We could show the flow of control schematically like this:
+Sxematik olaraq bunu aşağıdakı kimi göstərmək olar:
 
 ----
-top
-   greet
+üst
+   salamla
         console.log
-   greet
-top
+   salamla
+üst
    console.log
-top
+üst
 ----
 
-(((return keyword)))(((memory)))Because a function has to jump back to
-the place of the call when it returns, the computer must remember the
-context from which the function was called. In one case, `console.log`
-has to jump back to the `greet` function. In the other case, it jumps
-back to the end of the program.
+(((return keyword)))(((memory)))Funksiya çağırılıb yekunlaşdıqdan sonra 
+nəzarət axını çağırıldığı sətirə geri qayıtdığına görə kompüter həmin 
+konteksti yadda saxlamalıdır. Bir halda `console.log` `salamla` funksiyasına
+tullanır, digər halda isə proqramın sonuna aparır.
 
-The place where the computer stores this context is the _((call
-stack))_. Every time a function is called, the current context is put
-on top of this “stack”. When the function returns, it removes the top
-context from the stack and uses it to continue execution.
+Kompüterin bu konteksti saxladığı yer isə _((sorğu steki))_ (call stack) adlanır. 
+Hər dəfə funksiya çağırılanda, cari konktest bu “stekin” yuxarısına yerləşdirilir. 
+Funksiyanın icrası başa çatdıqda ən üstdəki konktest stekdən kənarlaşdırılır 
+və proqramın sonrakı icrası üçün istifadə olunur.
 
-(((infinite loop)))(((stack overflow)))(((recursion)))Storing this
-stack requires space in the computer's memory. When the stack grows
-too big, the computer will fail with a message like “out of stack
-space” or “too much recursion”. The following code illustrates this by
-asking the computer a really hard question, which causes an infinite
-back-and-forth between two functions. Rather, it _would_ be infinite,
-if the computer had an infinite stack. As it is, we will run out of
-space, or “blow the stack”.
+(((infinite loop)))(((stack overflow)))(((recursion)))Bu steki saxlamaq 
+kompüterin yaddaşında yer tələb edir. Stek çox böyüdükcə kompüter “stek 
+yaddaşı dolub” və ya “həddindən çox rekursiya” ismarıcı ilə səhv verə 
+bilər (fail). Aşağıdakı kod bunu kompüterə çox çətin sual verməklə, 
+iki funksiya arasında sonsuz önə-arxaya getməklə nümayiş etdirir. 
+Kompüterin steki sonsuz olsaydı, sonsuz olaraq bu proses davam edəcəkdi. 
+Olmadığına görə yaddaş “dolub daşacaq”.
 
 // test: no
 
 [source,javascript]
 ----
-function chicken() {
-  return egg();
+function toyuq() {
+  return yumurta();
 }
-function egg() {
-  return chicken();
+function yumurta() {
+  return toyuq();
 }
-console.log(chicken() + " came first.");
+console.log(toyuq() + " birinci yaranıb.");
 // → ??
 ----
 
-== Optional Arguments ==
+== Könüllü(optional) Arqumentlər ==
 
-(((argument)))(((function,application)))The following code is allowed
-and executes without any problem:
+(((argument)))(((function,application)))Aşağıdakı kod səhvsiz icra olunur:
 
 [source,javascript]
 ----
-alert("Hello", "Good Evening", "How do you do?");
+alert("Salam", "Axşamın xeyir", "Necəsən?");
 ----
 
-(((alert function)))The function `alert` officially accepts only one
-argument. Yet when you call it like this, it doesn't complain. It
-simply ignores the other arguments and shows you “Hello”.
+(((alert function)))`alert` funksiyası rəsmi olaraq yalnız bir arqument
+qəbul edir. Buna baxmayaraq belə çağırdıqda heç bir səhv baş vermir. 
+Sadəcə digər arqumentlərə məhəl qoyulmur (ignores) və “Salam” çıxarır.
 
-(((undefined)))(((parameter)))JavaScript is extremely broad-minded
-about the number of arguments you pass to a function. If you pass too
-many, the extra ones are ignored. If you pass too few, the missing
-parameters simply get assigned the value `undefined`.
+(((undefined)))(((parameter)))JavaScript funksiyaya ötürülən arqumentlərin 
+sayına görə çox tolerantdır (broad-minded). Əgər lazımdan çox ötürmüsünüzsə, 
+əlavələ sadəcə iqnor olunacaq, əksinə, lazımından az ötürülürsə, buraxılmış 
+arqumentlərə sadəcə olaraq `undefined` mənimsədilir.
 
-The downside of this is that it is possible—likely, even—that you'll
-accidentally pass the wrong number of arguments to functions and no
-one will tell you about it.
+Bunun mənfi tərəfi odur ki, funksiyaya təsadüfən arqumentlərin sayını səhv 
+ötürsəniz, heç kim sizə bu haqda deməyəcək.
 
 [[power]]
-(((power example)))(((optional argument)))The
-upside is that this behavior can be used to have a function take
-“optional” arguments. For example, the following version of `power`
-can be called either with two arguments or with a single argument, in
-which case the exponent is assumed to be two, and the function behaves
-like `square`.
+(((power example)))(((optional argument)))Üstün tərəfi isə odur ki, 
+“könüllü” (“optional”) arqumentlər yarada bilərik. Məsələn, `quvvet` -in 
+aşağıdakı versiyası iki arqumentlə də, bir arqumentlə də icra oluna bilər. 
+Bir arqumentli halda eksponent iki götürülür və `kvadrat` funksiyası kimi 
+davranır.
 
 // test: wrap
 
 [source,javascript]
 ----
-function power(base, exponent) {
-  if (exponent == undefined)
-    exponent = 2;
-  var result = 1;
-  for (var count = 0; count < exponent; count++)
-    result *= base;
-  return result;
+function quvvet(esas, eksponent) {
+  if (eksponent == undefined)
+    eksponent = 2;
+  var netice = 1;
+  for (var say = 0; say < eksponent; say++)
+    netice *= esas;
+  return netice;
 }
 
-console.log(power(4));
+console.log(quvvet(4));
 // → 16
-console.log(power(4, 3));
+console.log(quvvet(4, 3));
 // → 64
 ----
 
-(((console.log)))In the link:04_data.html#arguments_object[next
-chapter], we will see a way in which a function body can get at the
-exact list of arguments that were passed. This is helpful because it
-makes it possible for a function to accept any number of arguments.
-For example, `console.log` makes use of this—it outputs all of the
-values it is given.
+(((console.log)))In the link:04_data.html#arguments_object[Növbəti 
+fəsildə] funksiyanın gövdəsinin ötürülən arqumentlərin sayını necə 
+dəqiq müəyyənləşdirdiyini görəcəyik. İstədiyimiz sayda arqument 
+ötürə bilmək cəhətdən bu çox yararlıdır. `console.log` bundan 
+istifadə edərək ötürdüyümüz bütün arqumentləri çap edir.
 
 [source,javascript]
 ----
